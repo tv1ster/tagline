@@ -4,7 +4,9 @@ import styles from "./tagline.module.scss";
 export const Tagline: FC = () => {
   return (
     <div className={styles.tagline}>
-      Tagline
+      <div className={styles.tagline__header}>
+        Tagline element
+      </div>
     </div>
   );
 }
