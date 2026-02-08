@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Dialog, dialogStore } from "./dialog";
+import { MainDialog, mainDialogStore } from "./dialogs";
 import styles from "./tagline.module.scss";
 
 export const Tagline: FC = () => {
@@ -7,12 +7,12 @@ export const Tagline: FC = () => {
     <div className={styles.tagline}>
       <div
         className={styles.tagline__header}
-        onClick={() => dialogStore.open()}
+        onClick={() => mainDialogStore.open()}
       >
         Tagline element
       </div>
       <div>
-        <Dialog />
+        <MainDialog />
       </div>
     </div>
   );

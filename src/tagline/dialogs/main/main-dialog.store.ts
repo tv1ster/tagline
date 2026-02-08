@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-class DialogStore {
+class MainDialogStore {
   private _isVisible = false;
 
   constructor() {
@@ -20,4 +20,4 @@ class DialogStore {
   }
 }
 
-export const dialogStore = new DialogStore();
+export const mainDialogStore = new MainDialogStore();

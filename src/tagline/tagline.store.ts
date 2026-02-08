@@ -6,8 +6,14 @@ export type Tagline = Readonly<{
 }>;
 
 class TaglineStore {
+  private readonly _taglines: Tagline[] = [];
+
   constructor() {
     makeAutoObservable(this);
+  }
+
+  get taglines(): Tagline[] {
+    return this._taglines;
   }
 }
 
