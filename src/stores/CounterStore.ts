@@ -1,0 +1,15 @@
+import { makeAutoObservable } from 'mobx'
+
+class CounterStore {
+  count = 0
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  increment = () => {
+    this.count += 1
+  }
+}
+
+export const counterStore = new CounterStore()
