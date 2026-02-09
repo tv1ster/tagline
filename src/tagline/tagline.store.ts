@@ -1,12 +1,14 @@
 import { makeAutoObservable } from "mobx";
 
 export type Tagline = Readonly<{
+  id: string;
   label: string;
   link: string;
 }>;
 
 class TaglineStore {
   private readonly _taglines: Tagline[] = [];
+  private _nextId = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -17,7 +19,19 @@ class TaglineStore {
   }
 
   addTagline(label: string, link: string): void {
-    this._taglines.push({ label, link });
+    const id = String(this._nextId++);
+    this._taglines.push({ id, label, link });
+  }
+
+  getItemById(id: string): Tagline | undefined {
+    return this._taglines.find(item => item.id === id);
+  }
+
+  editTagline(id: string, label: string, link: string): void {
+    const itemIndex = this._taglines.findIndex(item => item.id === id);
+    if (itemIndex !== -1) {
+      this._taglines[itemIndex] = { id, label, link };
+    }
   }
 }
 

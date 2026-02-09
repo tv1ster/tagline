@@ -3,6 +3,16 @@
     padding: 14px;
   }
 
+  &__item {
+    padding: 15px 12px;
+    color: #ffffff;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.5);
+    }
+  }
+
   &__add {
     position: relative;
     color: #ffffff;
