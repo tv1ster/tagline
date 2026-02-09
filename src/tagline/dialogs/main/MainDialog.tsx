@@ -5,6 +5,7 @@ import { DialogBody, DialogHeader } from '../common';
 import { itemDialogStore } from "../item";
 import styles from './main-dialog.module.scss';
 import { taglineStore } from "../../tagline.store.ts";
+import { stylesDialogStore } from "../styles";
 
 export const MainDialog: FC = observer(() => {
   if (!mainDialogStore.isVisible) {
@@ -42,7 +43,10 @@ export const MainDialog: FC = observer(() => {
           Add item
         </div>
       </div>
-      <div className={styles.dialog__styles}>
+      <div className={styles.dialog__styles} onClick={() => {
+        mainDialogStore.close();
+        stylesDialogStore.open();
+      }}>
         <div className={styles.dialog__styles_label}>Styles</div>
         <div className={styles.dialog__styles_arrow}>›</div>
       </div>
