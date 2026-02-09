@@ -8,12 +8,12 @@
   font-weight: 700;
   border-bottom: #E9ECF612 1px solid;
 
+  &__back,
   &__close {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 11px;
     top: 50%;
     width: 32px;
     height: 32px;
@@ -23,5 +23,13 @@
     &:hover {
       filter: brightness(0.5);
     }
+  }
+
+  &__back {
+    left: 11px;
+  }
+
+  &__close {
+    right: 11px;
   }
 }

@@ -5,6 +5,7 @@ import { itemDialogStore } from './item-dialog.store.ts';
 import { observer } from "mobx-react-lite";
 import styles from "./item-dialog.module.scss";
 import { taglineStore } from "../../tagline.store.ts";
+import { mainDialogStore } from "../main";
 
 export const ItemDialog: FC = observer(() => {
   const [label, setLabel] = useState("");
@@ -39,9 +40,14 @@ export const ItemDialog: FC = observer(() => {
     itemDialogStore.close();
   }
 
+  const onBack = () => {
+    onClose();
+    mainDialogStore.open();
+  }
+
   return (
     <DialogBody>
-      <DialogHeader label={'Item'} onClose={onClose}/>
+      <DialogHeader label={'Item'} onClose={onClose} onBack={onBack}/>
       <div className={styles.item__inputs}>
         <div className={styles.item__inputblock}>
           <div className={styles.item__label}>Label</div>
