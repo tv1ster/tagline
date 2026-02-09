@@ -1,0 +1,16 @@
+.taglines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+  justify-content: var(--tagline-justify-content);
+
+  &__item {
+    color: var(--tagline-color);
+    font-size: var(--tagline-font-size);
+    background-color: var(--tagline-background-color);
+    border: var(--tagline-border);
+    border-radius: var(--tagline-border-radius);
+    padding: var(--tagline-padding);
+  }
+}

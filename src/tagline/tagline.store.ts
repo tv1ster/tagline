@@ -41,6 +41,10 @@ class TaglineStore {
     }
   }
 
+  get styles(): Record<Styles, string> {
+    return this._styles;
+  }
+
   getStyle(style: Styles): string {
     return this._styles[style];
   }

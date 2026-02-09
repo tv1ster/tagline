@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { stylesItems } from "./types";
 import styles from './styles-dialog.module.scss';
 import { taglineStore } from "../../tagline.store.ts";
+import { mainDialogStore } from "../main";
 
 export const StylesDialog: FC = observer(() => {
   if (!stylesDialogStore.isVisible) {
@@ -12,9 +13,16 @@ export const StylesDialog: FC = observer(() => {
   }
   return (
     <DialogBody>
-      <DialogHeader label={'Styles'} onClose={() => {
-        stylesDialogStore.close()
-      }}/>
+      <DialogHeader
+        label={'Styles'}
+        onClose={() => {
+          stylesDialogStore.close()
+        }}
+        onBack={() => {
+          stylesDialogStore.close();
+          mainDialogStore.open();
+        }}
+      />
       <div>
         {
           stylesItems.map((style, index) => {
