@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
 import { Align, Radius, Size, Style, Styles } from "./types.ts";
 
 export type Tagline = Readonly<{
@@ -19,6 +19,20 @@ class TaglineStore {
 
   constructor() {
     makeAutoObservable(this);
+
+    reaction(
+      () => JSON.stringify(this._taglines),
+      (taglinesJson) => {
+        console.log('taglines saved to server:', { taglines: JSON.parse(taglinesJson) });
+      }
+    );
+
+    reaction(
+      () => this._styles,
+      (styles) => {
+        console.log('styles saved to server:', styles);
+      }
+    );
   }
 
   get taglines(): Tagline[] {
