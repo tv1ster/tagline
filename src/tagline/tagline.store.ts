@@ -15,6 +15,10 @@ class TaglineStore {
   get taglines(): Tagline[] {
     return this._taglines;
   }
+
+  addTagline(label: string, link: string): void {
+    this._taglines.push({ label, link });
+  }
 }
 
 export const taglineStore = new TaglineStore();

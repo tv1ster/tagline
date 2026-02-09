@@ -1,6 +1,7 @@
 import type { FC } from "react";
-import { MainDialog, mainDialogStore } from "./dialogs";
+import { mainDialogStore } from "./dialogs";
 import styles from "./tagline.module.scss";
+import { Dialogs } from "./dialogs/Dialogs.tsx";
 
 export const Tagline: FC = () => {
   return (
@@ -12,7 +13,7 @@ export const Tagline: FC = () => {
         Tagline element
       </div>
       <div>
-        <MainDialog />
+        <Dialogs />
       </div>
     </div>
   );

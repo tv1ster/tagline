@@ -1,23 +1,5 @@
-import { makeAutoObservable } from "mobx";
+import { BaseDialogStore } from "../base-dialog.store.ts";
 
-class MainDialogStore {
-  private _isVisible = false;
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  open(): void {
-    this._isVisible = true;
-  }
-
-  close(): void {
-    this._isVisible = false;
-  }
-
-  get isVisible(): boolean {
-    return this._isVisible;
-  }
-}
+class MainDialogStore extends BaseDialogStore {}
 
 export const mainDialogStore = new MainDialogStore();

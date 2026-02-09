@@ -1,0 +1,29 @@
+.dialog {
+  &__list {
+    padding: 14px;
+  }
+
+  &__add {
+    position: relative;
+    color: #ffffff;
+    opacity: 0.45;
+    padding: 16px 8px 16px 44px;
+    cursor: pointer;
+
+    &::before {
+      content: "+";
+      position: absolute;
+      left: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    &:hover {
+      filter: brightness(0.5);
+    }
+  }
+}
