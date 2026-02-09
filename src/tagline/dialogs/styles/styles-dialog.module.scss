@@ -1,0 +1,70 @@
+$style-items: (
+  lightgrey: (background: #FFFFFF1A, color: #ffffff),
+  darkblue: (background: #157BDA33, color: #56ADFF),
+  lightblue: (background: #157BDAED, color: #ffffff),
+  transparent: (background: transparent, color: #ffffff)
+);
+
+$align-icons: (
+  left: url('./images/left.png') no-repeat center,
+  center: url('./images/center.png') no-repeat center,
+  right: url('./images/right.png') no-repeat center
+);
+
+.styles {
+  &__block {
+    color: #ffffff;
+    padding: 12px 14px;
+  }
+
+  &__label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  &__items {
+    display: flex;
+    gap: 8px;
+    height: 32px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-grow: 1;
+
+    &:hover {
+      filter: brightness(0.5);
+    }
+  }
+
+  &__item_active {
+    background: #FFFFFF0D;
+    border: 1px solid #FFFFFF;
+  }
+
+  &__item_style {
+    height: 37px;
+  }
+
+  @each $item, $properties in $style-items {
+    &__item_style_#{$item} {
+      background: map-get($properties, background);
+      color: map-get($properties, color);
+    }
+  }
+
+  &__item_style_transparent {
+    border: 1px solid #FFFFFF40;
+  }
+
+  @each $align, $icon in $align-icons {
+    &__item_align_#{$align} {
+      background: $icon;
+    }
+  }
+}
