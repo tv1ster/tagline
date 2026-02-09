@@ -37,7 +37,8 @@ export const StylesDialog: FC = observer(() => {
                           className={[
                             styles.styles__item,
                             taglineStore.getStyle(style.type) === value.type ? styles.styles__item_active : '',
-                            ...value.classnames,
+                            style.classname ?? '',
+                            value.classname ?? '',
                           ].join(' ')}
                           onClick={() => {
                             if (taglineStore.getStyle(style.type) !== value.type) {
