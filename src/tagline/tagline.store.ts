@@ -10,10 +10,12 @@ export type Tagline = Readonly<{
 class TaglineStore {
   private readonly _taglines: Tagline[] = [];
   private _nextId = 0;
-  private _style = Style.LightGrey;
-  private _size = Size.M;
-  private _radius = Radius.Eight;
-  private _align = Align.Left;
+  private _styles: Record<Styles, string> = {
+    [Styles.Style]: Style.LightGrey,
+    [Styles.Size]: Size.M,
+    [Styles.Radius]: Radius.Four,
+    [Styles.Align]: Align.Left,
+  }
 
   constructor() {
     makeAutoObservable(this);
@@ -39,49 +41,15 @@ class TaglineStore {
     }
   }
 
-  get style(): Style {
-    return this._style;
-  }
-
-  set style(value: Style) {
-    this._style = value;
-  }
-
-  get size(): Size {
-    return this._size;
-  }
-
-  set size(value: Size) {
-    this._size = value;
-  }
-
-  get radius(): Radius {
-    return this._radius;
-  }
-
-  set radius(value: Radius) {
-    this._radius = value;
-  }
-
-  get align(): Align {
-    return this._align;
-  }
-
-  set align(value: Align) {
-    this._align = value;
-  }
-
   getStyle(style: Styles): string {
-    switch (style) {
-      case Styles.Style:
-        return this.style;
-      case Styles.Size:
-        return this.size;
-      case Styles.Radius:
-        return this.radius;
-      case Styles.Align:
-        return this.align;
-    }
+    return this._styles[style];
+  }
+
+  setStyle(style: Styles, value: string): void {
+    this._styles = {
+      ...this._styles,
+      [style]: value,
+    };
   }
 }
 

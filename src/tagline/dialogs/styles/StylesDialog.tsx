@@ -31,6 +31,11 @@ export const StylesDialog: FC = observer(() => {
                             taglineStore.getStyle(style.type) === value.type ? styles.styles__item_active : '',
                             ...value.classnames,
                           ].join(' ')}
+                          onClick={() => {
+                            if (taglineStore.getStyle(style.type) !== value.type) {
+                              taglineStore.setStyle(style.type, value.type);
+                            }
+                          }}
                         >
                           {value.specialValue !== undefined ? value.specialValue : value.type.toUpperCase()}
                         </div>
