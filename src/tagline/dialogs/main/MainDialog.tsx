@@ -42,6 +42,10 @@ export const MainDialog: FC = observer(() => {
           Add item
         </div>
       </div>
+      <div className={styles.dialog__styles}>
+        <div className={styles.dialog__styles_label}>Styles</div>
+        <div className={styles.dialog__styles_arrow}>›</div>
+      </div>
     </DialogBody>
   )
 })

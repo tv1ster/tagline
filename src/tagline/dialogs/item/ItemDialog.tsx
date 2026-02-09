@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC, useEffect } from "react";
 import { useState } from "react";
 import { DialogBody, DialogHeader } from "../common";
 import { itemDialogStore } from './item-dialog.store.ts';
@@ -8,21 +8,22 @@ import { taglineStore } from "../../tagline.store.ts";
 import { mainDialogStore } from "../main";
 
 export const ItemDialog: FC = observer(() => {
-  const [label, setLabel] = useState("");
-  const [link, setLink] = useState("");
+  const [label, setLabel] = useState('');
+  const [link, setLink] = useState('');
 
-  const { isVisible, itemId } = itemDialogStore;
-
-  if (!isVisible) {
-    return null;
-  }
-
-  if (itemId !== undefined) {
-    const item = taglineStore.getItemById(itemId);
-    if (item && item.label !== label && item.link !== link) {
-      setLabel(item.label);
-      setLink(item.link);
+  useEffect(() => {
+    if (itemDialogStore.itemId) {
+      const item = taglineStore.getItemById(itemDialogStore.itemId);
+      setLabel(item?.label ?? '');
+      setLink(item?.link ?? '');
+    } else {
+      setLabel('');
+      setLink('');
     }
+  }, [itemDialogStore.itemId, itemDialogStore.isVisible]);
+
+  if (!itemDialogStore.isVisible) {
+    return null;
   }
 
   const onClose = () => {
@@ -30,8 +31,8 @@ export const ItemDialog: FC = observer(() => {
       itemDialogStore.close();
       return;
     }
-    if (itemId !== undefined) {
-      taglineStore.editTagline(itemId, label, link);
+    if (itemDialogStore.itemId !== undefined) {
+      taglineStore.editTagline(itemDialogStore.itemId, label, link);
       itemDialogStore.close();
       return;
     }

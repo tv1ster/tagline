@@ -7,6 +7,7 @@
     padding: 15px 12px;
     color: #ffffff;
     cursor: pointer;
+    font-size: 14px;
 
     &:hover {
       filter: brightness(0.5);
@@ -19,6 +20,7 @@
     opacity: 0.45;
     padding: 16px 8px 16px 44px;
     cursor: pointer;
+    font-size: 14px;
 
     &::before {
       content: "+";
@@ -35,5 +37,43 @@
     &:hover {
       filter: brightness(0.5);
     }
+  }
+
+  &__styles {
+    border-top: #E9ECF612 1px solid;
+    color: #ffffff;
+    position: relative;
+    padding: 14px 43px;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.5);
+    }
+  }
+
+  &__styles_label {
+    font-size: 14px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -29px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background: url('./styles-icon.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &__styles_arrow {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 15px;
   }
 }
