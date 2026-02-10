@@ -4,7 +4,7 @@ import { stylesDialogStore } from "./styles-dialog.store.ts";
 import { observer } from "mobx-react-lite";
 import { stylesItems } from "./types";
 import styles from './styles-dialog.module.scss';
-import { taglineStore } from "../../tagline.store.ts";
+import { taglineStore } from "../../tagline/tagline.store.ts";
 import { mainDialogStore } from "../main";
 
 export const StylesDialog: FC = observer(() => {

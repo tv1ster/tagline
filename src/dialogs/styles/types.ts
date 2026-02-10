@@ -1,4 +1,4 @@
-import { Align, Radius, Size, Style, Styles } from "../../types.ts";
+import { Align, Radius, Size, Style, Styles } from "../../tagline/types.ts";
 import styles from './styles-dialog.module.scss';
 
 const allStyles: readonly StyleItemValue[] = [

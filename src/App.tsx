@@ -1,5 +1,5 @@
 import styles from './app.module.scss';
-import { Dialogs } from "./tagline/dialogs/Dialogs.tsx";
+import { Dialogs } from "./dialogs/Dialogs.tsx";
 import { Sections } from "./sections/Sections.tsx";
 
 export const App = () => {

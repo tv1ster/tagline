@@ -4,10 +4,10 @@ import { DialogBody, DialogHeader } from "../common";
 import { itemDialogStore } from './item-dialog.store.ts';
 import { observer } from "mobx-react-lite";
 import styles from "./item-dialog.module.scss";
-import { taglineStore } from "../../tagline.store.ts";
+import { taglineStore } from "../../tagline/tagline.store.ts";
 import { mainDialogStore } from "../main";
-import type { FieldsRecord } from "../../../sections/types.ts";
-import { SectionFieldType } from "../../../sections/types.ts";
+import type { FieldsRecord } from "../../sections/types.ts";
+import { SectionFieldType } from "../../sections/types.ts";
 
 const getInitialFields = (): FieldsRecord => {
   const fields: FieldsRecord = {};

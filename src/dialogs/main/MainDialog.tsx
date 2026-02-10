@@ -4,7 +4,7 @@ import { mainDialogStore } from "./main-dialog.store.ts";
 import { DialogBody, DialogHeader } from '../common';
 import { itemDialogStore } from "../item";
 import styles from './main-dialog.module.scss';
-import { taglineStore } from "../../tagline.store.ts";
+import { taglineStore } from "../../tagline/tagline.store.ts";
 import { stylesDialogStore } from "../styles";
 
 export const MainDialog: FC = observer(() => {
