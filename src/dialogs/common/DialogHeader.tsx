@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import styles from "./dialog-header.module.scss";
+import { dialogsStore } from "../dialogs.store.ts";
 
 export const DialogHeader: FC<Readonly<{
   label: string;
@@ -8,10 +9,13 @@ export const DialogHeader: FC<Readonly<{
 }>> = ({ label, onClose, onBack }) => {
   return (
     <div className={styles.header}>
-      {onBack && (
+      {dialogsStore.canGoBack && (
         <div
           className={styles.header__back}
-          onClick={onBack}
+          onClick={() => {
+            onBack?.();
+            dialogsStore.goBack();
+          }}
         >
           ‹
         </div>

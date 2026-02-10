@@ -26,6 +26,10 @@ export class DialogsStore {
     this._stack = [];
   }
 
+  get canGoBack(): boolean {
+    return this._stack.length > 1;
+  }
+
   goBack(): void {
     this._stack.pop();
   }

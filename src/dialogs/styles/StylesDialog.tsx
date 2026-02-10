@@ -11,7 +11,6 @@ export const StylesDialog: FC = observer(() => {
       <DialogHeader
         label={'Styles'}
         onClose={() => { dialogsStore.closeAll(); }}
-        onBack={() => { dialogsStore.goBack(); }}
       />
       <div>
         {

@@ -1,3 +1,5 @@
+@use '../../styles/mixins';
+
 .items {
   display: flex;
   flex-wrap: wrap;
@@ -12,5 +14,7 @@
     border: var(--tagline-border);
     border-radius: var(--tagline-border-radius);
     padding: var(--tagline-padding);
+
+    @include mixins.clickable;
   }
 }

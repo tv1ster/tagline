@@ -50,14 +50,10 @@ export const ItemDialog: FC = observer(() => {
       [fieldType]: value,
     }));
   };
-  const onBack = () => {
-    saveChanges();
-    dialogsStore.goBack();
-  }
 
   return (
     <DialogBody>
-      <DialogHeader label={'Item'} onClose={onClose} onBack={onBack}/>
+      <DialogHeader label={'Item'} onClose={onClose} onBack={() => saveChanges()}/>
       <div className={styles.item__inputs}>
         {sectionStore.fields.map((field) => (
           <div key={field.type} className={styles.item__inputblock}>
