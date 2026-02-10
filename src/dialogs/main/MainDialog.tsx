@@ -1,13 +1,12 @@
 import type { FC } from "react";
 import { observer } from "mobx-react-lite";
-import { mainDialogStore } from "./main-dialog.store.ts";
 import { DialogBody, DialogHeader } from '../common';
 import styles from './main-dialog.module.scss';
 import { dialogsStore } from "../dialogs.store.ts";
 import { DialogType } from "../types.ts";
 
 export const MainDialog: FC = observer(() => {
-  const { sectionStore } = mainDialogStore;
+  const sectionStore = dialogsStore.expectedSectionStore;
 
   return (
     <DialogBody>

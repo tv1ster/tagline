@@ -1,7 +1,6 @@
 import { type FC, useEffect } from "react";
 import { useState } from "react";
 import { DialogBody, DialogHeader } from "../common";
-import { itemDialogStore } from './item-dialog.store.ts';
 import { observer } from "mobx-react-lite";
 import styles from "./item-dialog.module.scss";
 import type { FieldsRecord } from "../../sections/types.ts";
@@ -9,7 +8,7 @@ import { SectionFieldType } from "../../sections/types.ts";
 import { dialogsStore } from "../dialogs.store.ts";
 
 export const ItemDialog: FC = observer(() => {
-  const { sectionStore } = itemDialogStore;
+  const sectionStore = dialogsStore.expectedSectionStore;
   const initialFields = sectionStore.fields.reduce(
     (map, field) => {
       map[field.type] = field.initialValue;
@@ -18,13 +17,21 @@ export const ItemDialog: FC = observer(() => {
   const [fields, setFields] = useState<FieldsRecord>(initialFields);
 
   useEffect(() => {
-    if (itemDialogStore.itemId) {
-      const item = sectionStore.getItemById(itemDialogStore.itemId);
+    if (dialogsStore.itemId) {
+      const item = sectionStore.getItemById(dialogsStore.itemId);
       setFields(item?.fields ?? initialFields);
     } else {
       setFields(initialFields);
     }
-  }, [itemDialogStore.itemId]);
+  }, [dialogsStore.itemId]);
+
+  const saveChanges = () => {
+    if (dialogsStore.itemId !== undefined) {
+      sectionStore.editItem(dialogsStore.itemId, fields);
+    } else {
+      sectionStore.addItem(fields);
+    }
+  }
 
   const onClose = () => {
     const requiredField = sectionStore.fields.find(f => f.required);
@@ -32,12 +39,7 @@ export const ItemDialog: FC = observer(() => {
       dialogsStore.closeAll();
       return;
     }
-    if (itemDialogStore.itemId !== undefined) {
-      sectionStore.editItem(itemDialogStore.itemId, fields);
-    } else {
-      // new item
-      sectionStore.addItem(fields);
-    }
+    saveChanges();
     dialogsStore.closeAll();
     return;
   }
@@ -48,10 +50,14 @@ export const ItemDialog: FC = observer(() => {
       [fieldType]: value,
     }));
   };
+  const onBack = () => {
+    saveChanges();
+    dialogsStore.goBack();
+  }
 
   return (
     <DialogBody>
-      <DialogHeader label={'Item'} onClose={onClose} onBack={() => dialogsStore.goBack()}/>
+      <DialogHeader label={'Item'} onClose={onClose} onBack={onBack}/>
       <div className={styles.item__inputs}>
         {sectionStore.fields.map((field) => (
           <div key={field.type} className={styles.item__inputblock}>
