@@ -9,7 +9,7 @@ export const Sections = () => {
       {
         sectionsStore.sections.map((section) => {
           return (
-            <section key={section.brandingPrefix} className={styles.sections__section}>
+            <section key={section.key} className={styles.sections__section}>
               <div
                 className={styles.sections__header}
                 onClick={() => dialogsStore.openDialog(DialogType.Main, section.store)}

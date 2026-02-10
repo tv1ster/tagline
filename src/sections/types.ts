@@ -34,7 +34,7 @@ export interface ISectionStore {
 
 export interface ISection {
   readonly headerLabel: string;
-  readonly brandingPrefix: string;
+  readonly key: string;
   readonly store: ISectionStore;
 }
 

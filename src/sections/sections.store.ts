@@ -6,7 +6,7 @@ export class SectionsStore {
   get sections(): ISection[] {
     return [{
       headerLabel: 'Tagline element',
-      brandingPrefix: 'tagline',
+      key: 'tagline',
       store: taglineStore,
     }];
   }

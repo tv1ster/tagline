@@ -9,6 +9,7 @@ import {
 } from "../sections/types.ts";
 import { DEFAULT_ELEMENTS } from "./default-elements.constant.ts";
 import { themeFields } from "./theme-fields.constant.ts";
+import { themeStore } from "../theme/theme.store.ts";
 
 class TaglineStore implements ISectionStore {
   private readonly _elements: SectionElement[] = DEFAULT_ELEMENTS;
@@ -16,8 +17,8 @@ class TaglineStore implements ISectionStore {
   private _styles: Record<ThemeProperties, string> = {
     [ThemeProperties.Style]: ThemeStyle.LightGrey,
     [ThemeProperties.Size]: ThemeSize.M,
-    [ThemeProperties.Radius]: ThemeRadius.Four,
-    [ThemeProperties.Align]: ThemeAlign.Left,
+    [ThemeProperties.Radius]: ThemeRadius.Eight,
+    [ThemeProperties.Align]: ThemeAlign.Center,
   }
   readonly fields: SectionField[] = [
     {
@@ -36,6 +37,7 @@ class TaglineStore implements ISectionStore {
 
   constructor() {
     makeAutoObservable(this);
+    themeStore.provideTheme('tagline', this._styles);
 
     reaction(
       () => JSON.stringify(this._elements),
@@ -48,7 +50,8 @@ class TaglineStore implements ISectionStore {
       () => this._styles,
       (styles) => {
         console.log('styles saved to server:', styles);
-      }
+        themeStore.provideTheme('tagline', styles);
+      },
     );
   }
 
