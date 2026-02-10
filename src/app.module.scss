@@ -1,8 +1,7 @@
 .app {
   width: 100%;
   height: 100%;
-
-  * {
-    font-family: Circular Std, sans-serif, serif;
-  }
+  background: #262624;
+  display: flex;
+  justify-content: center;
 }
