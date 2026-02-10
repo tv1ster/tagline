@@ -24,6 +24,7 @@ export interface ISectionStore {
   addItem(fields: FieldsRecord): void;
   getItemById(id: string): SectionElement | undefined;
   editItem(id: string, data: FieldsRecord): void;
+  reorderItems(fromIndex: number, toIndex: number): void;
   readonly themeFields: readonly ThemeConfig[];
   readonly theme: Partial<Record<ThemeProperties, string>>;
   getThemeProperty(style: ThemeProperties): string | undefined;

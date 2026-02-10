@@ -75,6 +75,14 @@ class TaglineStore implements ISectionStore {
     }
   }
 
+  reorderItems(fromIndex: number, toIndex: number): void {
+    if (fromIndex < 0 || fromIndex >= this._elements.length || toIndex < 0 || toIndex >= this._elements.length) {
+      return;
+    }
+    const [removed] = this._elements.splice(fromIndex, 1);
+    this._elements.splice(toIndex, 0, removed);
+  }
+
   get theme(): Record<ThemeProperties, string> {
     return this._styles;
   }
