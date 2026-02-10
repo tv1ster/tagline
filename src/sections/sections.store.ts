@@ -1,5 +1,5 @@
 import type { ISection } from "./types.ts";
-import { taglineStore } from "./tagline/tagline.store.ts";
+import { taglineStore } from "../tagline/tagline.store.ts";
 
 
 export class SectionsStore {

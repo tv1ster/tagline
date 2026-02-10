@@ -1,0 +1,26 @@
+@use '../styles/mixins';
+
+.sections {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  width: 90%;
+
+  &__section {
+    margin-top: 190px;
+  }
+
+  &__header {
+    color: #ffffff;
+    font-size: 40px;
+
+    @include mixins.clickable;
+  }
+
+  &__items {
+    margin-top: 50px;
+  }
+}

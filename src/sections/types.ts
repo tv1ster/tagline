@@ -1,4 +1,4 @@
-import { Styles } from "./tagline/types.ts";
+import { Styles } from "../tagline/types.ts";
 
 export const enum SectionFieldType {
   Label,
@@ -36,3 +36,5 @@ export interface ISection {
   readonly brandingPrefix: string;
   readonly store: ISectionStore;
 }
+
+export type WithSectionStore = Readonly<{ sectionStore: ISectionStore }>;
