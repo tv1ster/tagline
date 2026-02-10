@@ -17,6 +17,10 @@ export class DialogsStore {
   }
 
   openDialog<T extends DialogType>(dialog: T, store: ISectionStore, itemId?: string): void {
+    // close same dialog if it's already open
+    if (this._stack.includes(dialog)) {
+      this._stack = this._stack.filter(d => d !== dialog);
+    }
     this._stack.push(dialog);
     this._sectionStore = store;
     this._itemId = itemId;
