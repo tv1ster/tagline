@@ -20,7 +20,7 @@ export const StylesDialog: FC = observer(() => {
         }}
         onBack={() => {
           stylesDialogStore.close();
-          mainDialogStore.open();
+          mainDialogStore.open(stylesDialogStore.sectionStore);
         }}
       />
       <div>

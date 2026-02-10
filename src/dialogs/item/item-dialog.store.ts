@@ -1,5 +1,6 @@
 import { BaseDialogStore } from "../base-dialog.store.ts";
 import { makeObservable, observable } from "mobx";
+import type { ISectionStore } from "../../sections/types.ts";
 
 class ItemDialogStore extends BaseDialogStore {
   _itemId: string | undefined = undefined;
@@ -11,9 +12,9 @@ class ItemDialogStore extends BaseDialogStore {
     })
   }
 
-  override open(itemId: string | undefined = undefined) {
+  override open(sectionStore: ISectionStore, itemId: string | undefined = undefined) {
     this._itemId = itemId;
-    super.open();
+    super.open(sectionStore);
   }
 
   get itemId() {

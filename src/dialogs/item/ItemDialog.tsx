@@ -29,9 +29,9 @@ export const ItemDialog: FC = observer(() => {
     } else {
       setFields(INITIAL_FIELDS);
     }
-  }, [itemDialogStore.itemId]);
+  }, [itemDialogStore.itemId, itemDialogStore.isVisible]);
 
-  if (!itemDialogStore.isVisible) {
+  if (!itemDialogStore.isVisible || !itemDialogStore.sectionStore) {
     return null;
   }
 
@@ -53,7 +53,7 @@ export const ItemDialog: FC = observer(() => {
 
   const onBack = () => {
     onClose();
-    mainDialogStore.open();
+    mainDialogStore.open(itemDialogStore.sectionStore);
   }
 
   const handleFieldChange = (fieldType: SectionFieldType, value: string) => {

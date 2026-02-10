@@ -24,7 +24,7 @@ export const MainDialog: FC = observer(() => {
                 className={styles.dialog__item}
                 onClick={() => {
                   mainDialogStore.close();
-                  itemDialogStore.open(tagline.id);
+                  itemDialogStore.open(mainDialogStore.sectionStore, tagline.id);
                 }}
               >
                 {taglineStore.getItemLabel(tagline)}
@@ -37,7 +37,7 @@ export const MainDialog: FC = observer(() => {
           onClick={() => {
             // todo: notification/dialogs service
             mainDialogStore.close();
-            itemDialogStore.open();
+            itemDialogStore.open(mainDialogStore.sectionStore);
           }}
         >
           Add item
@@ -45,7 +45,7 @@ export const MainDialog: FC = observer(() => {
       </div>
       <div className={styles.dialog__styles} onClick={() => {
         mainDialogStore.close();
-        stylesDialogStore.open();
+        stylesDialogStore.open(mainDialogStore.sectionStore);
       }}>
         <div className={styles.dialog__styles_label}>Styles</div>
         <div className={styles.dialog__styles_arrow}>›</div>
