@@ -1,14 +1,24 @@
 import type { FC } from "react";
-import { MainDialog } from "./main";
-import { ItemDialog } from "./item";
+import { observer } from "mobx-react-lite";
+import { dialogsStore } from "./dialogs.store.ts";
 import { StylesDialog } from "./styles";
+import { ItemDialog } from "./item";
+import { DialogType } from "./types.ts";
+import { MainDialog } from "./main";
 
-export const Dialogs: FC = () => {
+const DialogComponents = {
+  [DialogType.Styles]: <StylesDialog />,
+  [DialogType.Item]: <ItemDialog />,
+  [DialogType.Main]: <MainDialog />,
+}
+
+export const Dialogs: FC = observer(() => {
+  if (!dialogsStore.visibleDialog) {
+    return null;
+  }
   return (
     <>
-      <MainDialog />
-      <ItemDialog />
-      <StylesDialog />
+      {DialogComponents[dialogsStore.visibleDialog]}
     </>
   )
-}
+});

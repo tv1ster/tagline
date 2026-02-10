@@ -4,12 +4,12 @@ import { DialogBody, DialogHeader } from "../common";
 import { itemDialogStore } from './item-dialog.store.ts';
 import { observer } from "mobx-react-lite";
 import styles from "./item-dialog.module.scss";
-import { mainDialogStore } from "../main";
 import type { FieldsRecord } from "../../sections/types.ts";
 import { SectionFieldType } from "../../sections/types.ts";
+import { dialogsStore } from "../dialogs.store.ts";
 
 export const ItemDialog: FC = observer(() => {
-  const {sectionStore} = itemDialogStore;
+  const { sectionStore } = itemDialogStore;
   const initialFields = sectionStore.fields.reduce(
     (map, field) => {
       map[field.type] = field.initialValue;
@@ -24,31 +24,22 @@ export const ItemDialog: FC = observer(() => {
     } else {
       setFields(initialFields);
     }
-  }, [itemDialogStore.itemId, itemDialogStore.isVisible]);
-
-  if (!itemDialogStore.isVisible || !itemDialogStore.sectionStore) {
-    return null;
-  }
+  }, [itemDialogStore.itemId]);
 
   const onClose = () => {
     const requiredField = sectionStore.fields.find(f => f.required);
     if (requiredField && !fields[requiredField.type]) {
-      itemDialogStore.close();
+      dialogsStore.closeAll();
       return;
     }
     if (itemDialogStore.itemId !== undefined) {
       sectionStore.editItem(itemDialogStore.itemId, fields);
-      itemDialogStore.close();
-      return;
+    } else {
+      // new item
+      sectionStore.addItem(fields);
     }
-    // new item
-    sectionStore.addItem(fields);
-    itemDialogStore.close();
-  }
-
-  const onBack = () => {
-    onClose();
-    mainDialogStore.open(itemDialogStore.sectionStore);
+    dialogsStore.closeAll();
+    return;
   }
 
   const handleFieldChange = (fieldType: SectionFieldType, value: string) => {
@@ -60,7 +51,7 @@ export const ItemDialog: FC = observer(() => {
 
   return (
     <DialogBody>
-      <DialogHeader label={'Item'} onClose={onClose} onBack={onBack}/>
+      <DialogHeader label={'Item'} onClose={onClose} onBack={() => dialogsStore.goBack()}/>
       <div className={styles.item__inputs}>
         {sectionStore.fields.map((field) => (
           <div key={field.type} className={styles.item__inputblock}>

@@ -4,24 +4,16 @@ import { stylesDialogStore } from "./styles-dialog.store.ts";
 import { observer } from "mobx-react-lite";
 import { stylesItems } from "./types";
 import styles from './styles-dialog.module.scss';
-import { mainDialogStore } from "../main";
+import { dialogsStore } from "../dialogs.store.ts";
 
 export const StylesDialog: FC = observer(() => {
-  if (!stylesDialogStore.isVisible) {
-    return null;
-  }
   const { sectionStore } = stylesDialogStore;
   return (
     <DialogBody>
       <DialogHeader
         label={'Styles'}
-        onClose={() => {
-          stylesDialogStore.close()
-        }}
-        onBack={() => {
-          stylesDialogStore.close();
-          mainDialogStore.open(stylesDialogStore.sectionStore);
-        }}
+        onClose={() => { dialogsStore.closeAll(); }}
+        onBack={() => { dialogsStore.goBack(); }}
       />
       <div>
         {

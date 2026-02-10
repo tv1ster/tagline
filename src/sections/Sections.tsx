@@ -1,7 +1,7 @@
 import { sectionsStore } from "./sections.store.ts";
 import styles from "./sections.module.scss";
 import { Items } from "./items/Items.tsx";
-import { mainDialogStore } from "../dialogs";
+import { dialogsStore, DialogType } from "../dialogs";
 
 export const Sections = () => {
   return (
@@ -12,7 +12,7 @@ export const Sections = () => {
             <section key={section.brandingPrefix} className={styles.sections__section}>
               <div
                 className={styles.sections__header}
-                onClick={() => mainDialogStore.open(section.store)}
+                onClick={() => dialogsStore.openDialog(DialogType.Main, section.store)}
               >
                 {section.headerLabel}
               </div>
