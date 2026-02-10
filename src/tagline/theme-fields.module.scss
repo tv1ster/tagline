@@ -1,0 +1,35 @@
+$style-items: (
+  1: (background: #FFFFFF1A, color: #ffffff),
+  2: (background: #157BDA33, color: #56ADFF),
+  3: (background: #157BDAED, color: #ffffff),
+  4: (background: transparent, color: #ffffff)
+);
+
+$align-icons: (
+  left: url('./images/left.png') no-repeat center,
+  center: url('./images/center.png') no-repeat center,
+  right: url('./images/right.png') no-repeat center
+);
+
+.fields {
+  &__style {
+    height: 37px;
+  }
+
+  @each $item, $properties in $style-items {
+    &__style_#{$item} {
+      background: map-get($properties, background);
+      color: map-get($properties, color);
+    }
+  }
+
+  &__style_4 {
+    border: 1px solid #FFFFFF40;
+  }
+
+  @each $align, $icon in $align-icons {
+    &__align_#{$align} {
+      background: $icon;
+    }
+  }
+}

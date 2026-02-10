@@ -1,16 +1,17 @@
 import styles from './app.module.scss';
-import { Dialogs } from "./dialogs/Dialogs.tsx";
+import { Dialogs } from "./dialogs";
 import { Sections } from "./sections/Sections.tsx";
+import { Theme } from "./theme";
 
 export const App = () => {
   return (
-    <div className={styles.app}>
+    <Theme className={styles.app}>
       <main className={styles.app__sections}>
         <Sections/>
       </main>
       <div>
         <Dialogs />
       </div>
-    </div>
+    </Theme>
   );
 }

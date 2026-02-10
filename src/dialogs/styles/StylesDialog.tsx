@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import { DialogBody, DialogHeader } from "../common";
 import { observer } from "mobx-react-lite";
-import { stylesItems } from "./types";
 import styles from './styles-dialog.module.scss';
 import { dialogsStore } from "../dialogs.store.ts";
 
@@ -16,7 +15,7 @@ export const StylesDialog: FC = observer(() => {
       />
       <div>
         {
-          stylesItems.map((style, index) => {
+          sectionStore.themeFields.map((style, index) => {
             return (
               <div key={index} className={styles.styles__block}>
                 {style.label && <div className={styles.styles__label}>{style.label}</div>}
@@ -27,13 +26,13 @@ export const StylesDialog: FC = observer(() => {
                           key={i}
                           className={[
                             styles.styles__item,
-                            sectionStore.getStyle(style.type) === value.type ? styles.styles__item_active : '',
+                            sectionStore.getThemeProperty(style.type) === value.type ? styles.styles__item_active : '',
                             style.classname ?? '',
                             value.classname ?? '',
                           ].join(' ')}
                           onClick={() => {
-                            if (sectionStore.getStyle(style.type) !== value.type) {
-                              sectionStore.setStyle(style.type, value.type);
+                            if (sectionStore.getThemeProperty(style.type) !== value.type) {
+                              sectionStore.setThemeProperty(style.type, value.type);
                             }
                           }}
                         >

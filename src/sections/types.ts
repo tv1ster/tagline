@@ -1,4 +1,4 @@
-import { Styles } from "../tagline/types.ts";
+import { type ThemeConfig, ThemeProperties } from "../theme";
 
 export const enum SectionFieldType {
   Label,
@@ -24,9 +24,10 @@ export interface ISectionStore {
   addItem(fields: FieldsRecord): void;
   getItemById(id: string): SectionElement | undefined;
   editItem(id: string, data: FieldsRecord): void;
-  readonly styles: Record<Styles, string>;
-  getStyle(style: Styles): string
-  setStyle(style: Styles, value: string): void;
+  readonly themeFields: readonly ThemeConfig[];
+  readonly theme: Partial<Record<ThemeProperties, string>>;
+  getThemeProperty(style: ThemeProperties): string | undefined;
+  setThemeProperty(style: ThemeProperties, value: string): void;
   readonly fields: readonly SectionField[];
   getItemLabel(item: SectionElement): string;
 }

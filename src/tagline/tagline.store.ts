@@ -1,5 +1,5 @@
 import { makeAutoObservable, reaction } from "mobx";
-import { Align, Radius, Size, Style, Styles } from "./types.ts";
+import { ThemeAlign, ThemeRadius, ThemeSize, ThemeStyle, ThemeProperties } from "../theme";
 import {
   type FieldsRecord,
   type ISectionStore,
@@ -7,48 +7,17 @@ import {
   type SectionField,
   SectionFieldType
 } from "../sections/types.ts";
+import { DEFAULT_ELEMENTS } from "./default-elements.constant.ts";
+import { themeFields } from "./theme-fields.constant.ts";
 
 class TaglineStore implements ISectionStore {
-  private readonly _elements: SectionElement[] = [{
-    id: '0',
-    fields: {
-      [SectionFieldType.Label]: 'Marketing',
-      [SectionFieldType.Link]: 'https://example.com/marketing',
-    }
-  },{
-    id: '1',
-    fields: {
-      [SectionFieldType.Label]: 'Design',
-      [SectionFieldType.Link]: 'https://example.com/design',
-
-    }
-    }, {
-    id: '2',
-    fields: {
-      [SectionFieldType.Label]: 'Development',
-      [SectionFieldType.Link]: 'https://example.com/development',
-    }},
-    {
-      id: '3',
-      fields: {
-        [SectionFieldType.Label]: 'Front',
-        [SectionFieldType.Link]: 'https://example.com/front',
-
-
-      }}, {
-      id: '4',
-      fields: {
-        [SectionFieldType.Label]: 'AI engineering',
-        [SectionFieldType.Link]: 'https://example.com/ai-engineering',
-
-      }
-    }];
+  private readonly _elements: SectionElement[] = DEFAULT_ELEMENTS;
   private _nextId = 5;
-  private _styles: Record<Styles, string> = {
-    [Styles.Style]: Style.LightGrey,
-    [Styles.Size]: Size.M,
-    [Styles.Radius]: Radius.Four,
-    [Styles.Align]: Align.Left,
+  private _styles: Record<ThemeProperties, string> = {
+    [ThemeProperties.Style]: ThemeStyle.LightGrey,
+    [ThemeProperties.Size]: ThemeSize.M,
+    [ThemeProperties.Radius]: ThemeRadius.Four,
+    [ThemeProperties.Align]: ThemeAlign.Left,
   }
   readonly fields: SectionField[] = [
     {
@@ -62,6 +31,7 @@ class TaglineStore implements ISectionStore {
       initialValue: '',
     },
   ];
+  readonly themeFields = themeFields;
 
 
   constructor() {
@@ -102,15 +72,15 @@ class TaglineStore implements ISectionStore {
     }
   }
 
-  get styles(): Record<Styles, string> {
+  get theme(): Record<ThemeProperties, string> {
     return this._styles;
   }
 
-  getStyle(style: Styles): string {
+  getThemeProperty(style: ThemeProperties): string {
     return this._styles[style];
   }
 
-  setStyle(style: Styles, value: string): void {
+  setThemeProperty(style: ThemeProperties, value: string): void {
     this._styles = {
       ...this._styles,
       [style]: value,
