@@ -7,10 +7,10 @@ import styles from './taglines.module.scss';
 export const Taglines: FC = observer(() => {
   return (
     <div className={styles.taglines} style={inlineStylesFromStyles(taglineStore.styles)}>
-      {taglineStore.taglines.map((tagline) => {
+      {taglineStore.items.map((tagline) => {
         return (
           <div key={tagline.id} className={styles.taglines__item}>
-            {tagline.label}
+            {taglineStore.getItemLabel(tagline)}
           </div>);
       })}
     </div>

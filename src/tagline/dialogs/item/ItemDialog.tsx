@@ -6,38 +6,48 @@ import { observer } from "mobx-react-lite";
 import styles from "./item-dialog.module.scss";
 import { taglineStore } from "../../tagline.store.ts";
 import { mainDialogStore } from "../main";
+import type { FieldsRecord } from "../../../types.ts";
+import { SectionFieldType } from "../../../types.ts";
+
+const getInitialFields = (): FieldsRecord => {
+  const fields: FieldsRecord = {};
+  taglineStore.fields.forEach(field => {
+    fields[field.type] = field.initialValue;
+  });
+  return fields;
+};
+
+const INITIAL_FIELDS = getInitialFields();
 
 export const ItemDialog: FC = observer(() => {
-  const [label, setLabel] = useState('');
-  const [link, setLink] = useState('');
+  const [fields, setFields] = useState<FieldsRecord>(INITIAL_FIELDS);
 
   useEffect(() => {
     if (itemDialogStore.itemId) {
       const item = taglineStore.getItemById(itemDialogStore.itemId);
-      setLabel(item?.label ?? '');
-      setLink(item?.link ?? '');
+      setFields(item?.fields ?? INITIAL_FIELDS);
     } else {
-      setLabel('');
-      setLink('');
+      setFields(INITIAL_FIELDS);
     }
-  }, [itemDialogStore.itemId, itemDialogStore.isVisible]);
+  }, [itemDialogStore.itemId]);
 
   if (!itemDialogStore.isVisible) {
     return null;
   }
 
   const onClose = () => {
-    if (label === '') {
+    const requiredField = taglineStore.fields.find(f => f.required);
+    if (requiredField && !fields[requiredField.type]) {
       itemDialogStore.close();
       return;
     }
     if (itemDialogStore.itemId !== undefined) {
-      taglineStore.editTagline(itemDialogStore.itemId, label, link);
+      taglineStore.editItem(itemDialogStore.itemId, fields);
       itemDialogStore.close();
       return;
     }
     // new item
-    taglineStore.addTagline(label, link);
+    taglineStore.addItem(fields);
     itemDialogStore.close();
   }
 
@@ -46,28 +56,30 @@ export const ItemDialog: FC = observer(() => {
     mainDialogStore.open();
   }
 
+  const handleFieldChange = (fieldType: SectionFieldType, value: string) => {
+    setFields(prev => ({
+      ...prev,
+      [fieldType]: value,
+    }));
+  };
+
   return (
     <DialogBody>
       <DialogHeader label={'Item'} onClose={onClose} onBack={onBack}/>
       <div className={styles.item__inputs}>
-        <div className={styles.item__inputblock}>
-          <div className={styles.item__label}>Label</div>
-          <input
-            type="text"
-            className={styles.item__input}
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
-          />
-        </div>
-        <div className={styles.item__inputblock}>
-          <div className={styles.item__label}>Link</div>
-          <input
-            type="text"
-            className={styles.item__input}
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-        </div>
+        {taglineStore.fields.map((field) => (
+          <div key={field.type} className={styles.item__inputblock}>
+            <div className={styles.item__label}>
+              {field.label}
+            </div>
+            <input
+              type="text"
+              className={styles.item__input}
+              value={fields[field.type] ?? ''}
+              onChange={(e) => handleFieldChange(field.type, e.target.value)}
+            />
+          </div>
+        ))}
       </div>
     </DialogBody>
   )

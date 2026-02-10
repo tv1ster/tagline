@@ -1,14 +1,15 @@
 import { makeAutoObservable, reaction } from "mobx";
 import { Align, Radius, Size, Style, Styles } from "./types.ts";
+import {
+  type FieldsRecord,
+  type ISectionStore,
+  type SectionElement,
+  type SectionField,
+  SectionFieldType
+} from "../types.ts";
 
-export type Tagline = Readonly<{
-  id: string;
-  label: string;
-  link: string;
-}>;
-
-class TaglineStore {
-  private readonly _taglines: Tagline[] = [];
+class TaglineStore implements ISectionStore {
+  private readonly _elements: SectionElement[] = [];
   private _nextId = 0;
   private _styles: Record<Styles, string> = {
     [Styles.Style]: Style.LightGrey,
@@ -16,14 +17,27 @@ class TaglineStore {
     [Styles.Radius]: Radius.Four,
     [Styles.Align]: Align.Left,
   }
+  readonly fields: SectionField[] = [
+    {
+      type: SectionFieldType.Label,
+      label: 'Label',
+      initialValue: '',
+      required: true,
+    }, {
+      type: SectionFieldType.Link,
+      label: 'Link',
+      initialValue: '',
+    },
+  ];
+
 
   constructor() {
     makeAutoObservable(this);
 
     reaction(
-      () => JSON.stringify(this._taglines),
+      () => JSON.stringify(this._elements),
       (taglinesJson) => {
-        console.log('taglines saved to server:', { taglines: JSON.parse(taglinesJson) });
+        console.log('taglines saved to server:', {taglines: JSON.parse(taglinesJson)});
       }
     );
 
@@ -35,23 +49,23 @@ class TaglineStore {
     );
   }
 
-  get taglines(): Tagline[] {
-    return this._taglines;
+  get items(): readonly SectionElement[] {
+    return this._elements;
   }
 
-  addTagline(label: string, link: string): void {
+  addItem(fields: FieldsRecord): void {
     const id = String(this._nextId++);
-    this._taglines.push({ id, label, link });
+    this._elements.push({id, fields});
   }
 
-  getItemById(id: string): Tagline | undefined {
-    return this._taglines.find(item => item.id === id);
+  getItemById(id: string): SectionElement | undefined {
+    return this._elements.find(item => item.id === id);
   }
 
-  editTagline(id: string, label: string, link: string): void {
-    const itemIndex = this._taglines.findIndex(item => item.id === id);
+  editItem(id: string, fields: FieldsRecord): void {
+    const itemIndex = this._elements.findIndex(item => item.id === id);
     if (itemIndex !== -1) {
-      this._taglines[itemIndex] = { id, label, link };
+      this._elements[itemIndex] = {id, fields};
     }
   }
 
@@ -68,6 +82,10 @@ class TaglineStore {
       ...this._styles,
       [style]: value,
     };
+  }
+
+  getItemLabel(item: SectionElement): string {
+    return item.fields[SectionFieldType.Label] ?? '';
   }
 }
 

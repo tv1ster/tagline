@@ -17,7 +17,7 @@ export const MainDialog: FC = observer(() => {
       <DialogHeader label={'Tagline'} onClose={mainDialogStore.close}/>
       <div className={styles.dialog__list}>
         {
-          taglineStore.taglines.map(tagline => {
+          taglineStore.items.map(tagline => {
             return (
               <div
                 key={tagline.id}
@@ -27,7 +27,7 @@ export const MainDialog: FC = observer(() => {
                   itemDialogStore.open(tagline.id);
                 }}
               >
-                {tagline.label}
+                {taglineStore.getItemLabel(tagline)}
               </div>
             );
           })
