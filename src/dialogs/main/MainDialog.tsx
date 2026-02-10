@@ -4,20 +4,20 @@ import { mainDialogStore } from "./main-dialog.store.ts";
 import { DialogBody, DialogHeader } from '../common';
 import { itemDialogStore } from "../item";
 import styles from './main-dialog.module.scss';
-import { taglineStore } from "../../tagline/tagline.store.ts";
 import { stylesDialogStore } from "../styles";
 
 export const MainDialog: FC = observer(() => {
   if (!mainDialogStore.isVisible) {
     return null;
   }
+  const { sectionStore } = mainDialogStore;
 
   return (
     <DialogBody>
       <DialogHeader label={'Tagline'} onClose={mainDialogStore.close}/>
       <div className={styles.dialog__list}>
         {
-          taglineStore.items.map(tagline => {
+          sectionStore.items.map(tagline => {
             return (
               <div
                 key={tagline.id}
@@ -27,7 +27,7 @@ export const MainDialog: FC = observer(() => {
                   itemDialogStore.open(mainDialogStore.sectionStore, tagline.id);
                 }}
               >
-                {taglineStore.getItemLabel(tagline)}
+                {sectionStore.getItemLabel(tagline)}
               </div>
             );
           })

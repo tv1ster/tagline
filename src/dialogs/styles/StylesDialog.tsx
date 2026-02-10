@@ -4,13 +4,13 @@ import { stylesDialogStore } from "./styles-dialog.store.ts";
 import { observer } from "mobx-react-lite";
 import { stylesItems } from "./types";
 import styles from './styles-dialog.module.scss';
-import { taglineStore } from "../../tagline/tagline.store.ts";
 import { mainDialogStore } from "../main";
 
 export const StylesDialog: FC = observer(() => {
   if (!stylesDialogStore.isVisible) {
     return null;
   }
+  const { sectionStore } = stylesDialogStore;
   return (
     <DialogBody>
       <DialogHeader
@@ -36,13 +36,13 @@ export const StylesDialog: FC = observer(() => {
                           key={i}
                           className={[
                             styles.styles__item,
-                            taglineStore.getStyle(style.type) === value.type ? styles.styles__item_active : '',
+                            sectionStore.getStyle(style.type) === value.type ? styles.styles__item_active : '',
                             style.classname ?? '',
                             value.classname ?? '',
                           ].join(' ')}
                           onClick={() => {
-                            if (taglineStore.getStyle(style.type) !== value.type) {
-                              taglineStore.setStyle(style.type, value.type);
+                            if (sectionStore.getStyle(style.type) !== value.type) {
+                              sectionStore.setStyle(style.type, value.type);
                             }
                           }}
                         >

@@ -4,30 +4,25 @@ import { DialogBody, DialogHeader } from "../common";
 import { itemDialogStore } from './item-dialog.store.ts';
 import { observer } from "mobx-react-lite";
 import styles from "./item-dialog.module.scss";
-import { taglineStore } from "../../tagline/tagline.store.ts";
 import { mainDialogStore } from "../main";
 import type { FieldsRecord } from "../../sections/types.ts";
 import { SectionFieldType } from "../../sections/types.ts";
 
-const getInitialFields = (): FieldsRecord => {
-  const fields: FieldsRecord = {};
-  taglineStore.fields.forEach(field => {
-    fields[field.type] = field.initialValue;
-  });
-  return fields;
-};
-
-const INITIAL_FIELDS = getInitialFields();
-
 export const ItemDialog: FC = observer(() => {
-  const [fields, setFields] = useState<FieldsRecord>(INITIAL_FIELDS);
+  const {sectionStore} = itemDialogStore;
+  const initialFields = sectionStore.fields.reduce(
+    (map, field) => {
+      map[field.type] = field.initialValue;
+      return map;
+    }, {} as FieldsRecord);
+  const [fields, setFields] = useState<FieldsRecord>(initialFields);
 
   useEffect(() => {
     if (itemDialogStore.itemId) {
-      const item = taglineStore.getItemById(itemDialogStore.itemId);
-      setFields(item?.fields ?? INITIAL_FIELDS);
+      const item = sectionStore.getItemById(itemDialogStore.itemId);
+      setFields(item?.fields ?? initialFields);
     } else {
-      setFields(INITIAL_FIELDS);
+      setFields(initialFields);
     }
   }, [itemDialogStore.itemId, itemDialogStore.isVisible]);
 
@@ -36,18 +31,18 @@ export const ItemDialog: FC = observer(() => {
   }
 
   const onClose = () => {
-    const requiredField = taglineStore.fields.find(f => f.required);
+    const requiredField = sectionStore.fields.find(f => f.required);
     if (requiredField && !fields[requiredField.type]) {
       itemDialogStore.close();
       return;
     }
     if (itemDialogStore.itemId !== undefined) {
-      taglineStore.editItem(itemDialogStore.itemId, fields);
+      sectionStore.editItem(itemDialogStore.itemId, fields);
       itemDialogStore.close();
       return;
     }
     // new item
-    taglineStore.addItem(fields);
+    sectionStore.addItem(fields);
     itemDialogStore.close();
   }
 
@@ -67,7 +62,7 @@ export const ItemDialog: FC = observer(() => {
     <DialogBody>
       <DialogHeader label={'Item'} onClose={onClose} onBack={onBack}/>
       <div className={styles.item__inputs}>
-        {taglineStore.fields.map((field) => (
+        {sectionStore.fields.map((field) => (
           <div key={field.type} className={styles.item__inputblock}>
             <div className={styles.item__label}>
               {field.label}
